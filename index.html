@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+    #root p {
+      color: white;
+      font-size: 20px;
+      background-color: green;
+      text-align: center;
+      width: 200px;
+    }
+    #btn_plus {
+      background-color: red;
+      border: 2px solid #000000;
+      font-size: 15px;
+      width: 200px;
+
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <button id="btn_plus">+</button>
+
+  <!--
+    예전에 사용중이던 돔 활용방식이다.
+    컴포넌트를 정의하고, 실제 DOM에 컴포넌트를 그려준다.
+
+    <script type = "text/javascript">
+    const root = document.querySelector('#root');
+    const btn_plue = document.querySelector('#btn_plus');
+
+    let i = 0;
+
+    root.innerHTML = '<p>init : 0</p>'
+
+    btn_plue.addEventListener('click', () => {
+      root.innerHTML = `<p>init : ${++i}</p>`;
+    })
+  </script> -->
+
+
+  <!-- 
+  component 의 데이터를 변경 시키는 방법이다. 밑에서는 이 방법을 react 로 작업을 진행 할거다.
+  <script type = "text/javascript">
+    // console.log(React);
+    // console.log(ReactDOM);
+    const component = {
+      message: 'init',
+      count: 0,
+      render() {
+        return `<p>${this.message} : ${this.count}</p>`;
+      }
+    };
+
+    function render(rootElement, component) {
+      rootElement.innerHTML = component.render();
+    }
+    //초기화
+    render(document.querySelector('#root'), component);
+
+    document.querySelector('#btn_plus').addEventListener('click', () => {
+      component.message = 'update';
+      component.count = component.count +1;
+
+      render(document.querySelector('#root'), component)
+    })
+  </script> -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script type = "text/javascript">
+
+    const Component = props => {
+      return React.createElement('p', null, `${props.message} : ${props.count}`)
+    }
+
+    ReactDOM.render(
+      React.createElement(Component, {message: 'init', count: 0}, null),
+      document.querySelector('#root')
+    );    
+
+    document.querySelector('#btn_plus').addEventListener('click', () => {
+      ReactDOM.render(
+      React.createElement(Component, {message: 'update', count: 10}, null),
+      document.querySelector('#root')
+    );  
+    })
+  </script>
+</body>
+</html>
